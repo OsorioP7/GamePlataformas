@@ -9,42 +9,53 @@ function Login() {
   async function handleLogin(e) {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
     });
 
     if (error) {
       alert(error.message);
     } else {
       alert("Login correcto");
+      window.location.href = "/dashboard";
     }
   }
 
   return (
-  <div className="auth-container">
+    <div className="auth-container">
 
-    <div className="auth-overlay">
+      <div className="auth-overlay">
 
-      <h2 className="auth-title">Iniciar sesión</h2>
+        <h2 className="auth-title">Iniciar sesión</h2>
 
-      <input
-        className="auth-input"
-        type="email"
-        placeholder="Correo"
-      />
+        <form onSubmit={handleLogin}>
 
-      <input
-        className="auth-input"
-        type="password"
-        placeholder="Contraseña"
-      />
+          <input
+            className="auth-input"
+            type="email"
+            placeholder="Correo"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-      <button className="btn-primary">Ingresar</button>
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button type="submit" className="btn-primary">
+            Ingresar
+          </button>
+
+        </form>
+
+      </div>
 
     </div>
-
-  </div>
   );
 }
 
